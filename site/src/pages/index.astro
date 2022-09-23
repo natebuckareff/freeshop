@@ -1,0 +1,26 @@
+---
+import { ProductListTall } from '@components/product-list-tall';
+import SiteLayout from '@layouts/site-layout.astro';
+import { Currency } from '@models/currency';
+import { PRODUCTS } from '@models/product';
+---
+
+<SiteLayout title="Hello">
+    <div class="border border-red-500">
+        <ProductListTall
+            client:load
+            items={Object.keys(PRODUCTS).map(id => {
+                const product = PRODUCTS[id]!;
+                return {
+                    id: product.id,
+                    name: product.title,
+                    href: `/product/${id}`,
+                    price: Currency.stringify(product.price),
+                    description: product.description,
+                    imageSrc: product.imageSrc,
+                    imageAlt: product.imageAlt,
+                };
+            })}
+        />
+    </div>
+</SiteLayout>
